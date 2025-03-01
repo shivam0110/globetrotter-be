@@ -1,0 +1,33 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  
+}
+
+generator client {
+  provider             = "prisma-client-py"
+  interface            = "sync"
+  recursive_type_depth = 5
+}
+
+model Destination {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  clues     String[] // Array of clues
+  funFacts  String[] @map("fun_facts") // Array of fun facts
+  trivia    String[] // Array of trivia
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("destinations")
+}
+
+model User {
+  id               Int      @id @default(autoincrement())
+  username         String   @unique
+  bestTry          Int      @default(0) @map("best_try")
+  correctAnswers   Int      @default(0) @map("correct_answers") // Track correct answers
+  incorrectAnswers Int      @default(0) @map("incorrect_answers") // Track incorrect answers
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  @@map("users")
+}
