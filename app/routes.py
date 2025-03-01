@@ -259,7 +259,6 @@ def register_routes(app):
             
             for dest in destinations_data:
                 name = f"{dest['city']}, {dest['country']}"
-                fun_facts = dest.get('fun_fact', dest.get('fun_facts', []))
                 
                 # Check if destination already exists
                 existing = prisma.destination.find_unique(where={"name": name})
@@ -268,7 +267,7 @@ def register_routes(app):
                         data={
                             "name": name,
                             "clues": dest["clues"],
-                            "fun_facts": fun_facts,
+                            "funFacts": dest["fun_fact"],
                             "trivia": dest["trivia"]
                         }
                     )
